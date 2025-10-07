@@ -32,5 +32,10 @@ export default async function migrations(request, response) {
     return response.status(200).json(migratedMigrations);
   }
 
+  if (request.method !== "GET" && request.method !== "POST") {
+    await dbClient.end();
+    return response.status(405).end();
+  }
+
   return response.status(405).end();
 }
